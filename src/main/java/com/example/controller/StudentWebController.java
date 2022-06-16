@@ -14,23 +14,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class StudentWebController {
-	
+	@SuppressWarnings("static-access")
 	@RequestMapping("/bean")
-	public String nameSpringBoot(HttpServletRequest request,HttpServletResponse response,
-			@RequestBody convertCSV requestBean) throws ServletException, IOException {
-		String[] id=requestBean.getText1();
-		String[] name=requestBean.getText2();
-		String[] dep=requestBean.getText3();
-		String[] Class=requestBean.getText4();
-		int record=-1;
-		for (int i=0;i<19;i++) {
-			if(doPost(request,response)==name[i] ){
+	public String nameSpringBoot(HttpServletRequest request,HttpServletResponse response
+			) throws ServletException, IOException {
+		@SuppressWarnings("static-access")
+		String username = request.getParameter("name") ;
+		convertCSV.convert();
+		String[] id=convertCSV.getText1();
+		String[] name=convertCSV.getText2();
+		String[] dep=convertCSV.getText3();
+		String[] Class=convertCSV.getText4();
+		int record=1;
+		for (int i=1;i<19;i++) {
+			if(username.equals(name[i])){
 				record=i;
 				break;
 			}
 		}
-		String reply=id[record]+" "+dep[record]+" "+Class[record];
-		return "11";
+		String combine=id[record]+" "+dep[record]+" "+Class[record];
+		combine=new String(combine.getBytes(),"UTF-8");
+		return combine;
 	}
 	
 	public String doPost(HttpServletRequest request,HttpServletResponse response)
@@ -40,38 +44,5 @@ public class StudentWebController {
 			String username=request.getParameter("name") ;
 		return username;
 	}
-	
-//	@RequestMapping("/get")
-//	public void Get(HttpServletRequest request,HttpServletResponse response,
-//			@RequestBody convertCSV requestBean) throws IOException {
-//		PrintWriter writer=response.getWriter();
-//		request.setCharacterEncoding("utf-8");
-//		response.setContentType("text/html;charset=utf-8");
-//		String username=request.getParameter("name") ;
-//		String[] id=requestBean.getText1();
-//		String[] name=requestBean.getText2();
-//		String[] dep=requestBean.getText3();
-//		String[] Class=requestBean.getText4();
-//		int record=-1;
-//		for (int i=0;i<19;i++) {
-//			if(username==name[i] ){
-//				record=i;
-//				break;
-//			}
-//		}
-//		
-//		writer.println(id[record]+" "+dep[record]+" "+Class[record]);
-//		writer.println(11);
-//	}
-	@RequestMapping("/Helloget")
-	public class HelloGet extends HttpServlet{
-		@Override
-		public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-			req.setCharacterEncoding("UTF-8");
-			res.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = res.getWriter();
-			String username=req.getParameter("name") ;
-			out.println("Hello");
-		}
-	}
+
 }
