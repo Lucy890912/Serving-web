@@ -1,0 +1,29 @@
+body {
+	background-size:cover;
+	background-position:center 0;
+	background-repeat:no-repeat;
+	background-attachment: fixed;
+}
+.list {
+	border:soild 1px red;
+	position:fixed;
+	bottom:160px; 
+	left:700px;
+	border:solid white;
+	opacity:0.7;
+	padding:15px;
+	padding-right:100px;
+	animation:blink 0.4s infinite alternate;
+    animation-delay:1s;
+}
+.list::after{
+	opacity:1;
+}
+ @keyframes blink {
+    from {
+      border-color: grey;
+    }
+    to {
+      border-color: #ffffff;
+    }
+  }
